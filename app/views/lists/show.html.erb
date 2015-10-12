@@ -5,13 +5,24 @@
 
   <ul>
     <% @list.tasks.each do |t| %>
-      <li>
-        <%= t.description %> |
-        <%= link_to "edit", edit_list_task_path(@list, t) %> |
-        <%= link_to "delete", list_task_path(@list, t),
-                              data: { confirm: 'u sure bro?',
-                                      method: 'delete' } %>
-      </li>
+      <% if t.done %>
+        <li>
+          <s>
+            <%= t.description %>
+          </s>
+            <%= link_to "just kidding", list_task_path(@list, t, :done => false), data: { method: 'patch' } %> |
+            <%= link_to "edit", edit_list_task_path(@list, t) %>
+        </li>
+      <% else %>
+        <li>
+          <%= t.description %> |
+          <%= link_to "complete", list_task_path(@list, t, :done => true), data: { method: 'patch' } %> |
+          <%= link_to "edit", edit_list_task_path(@list, t) %> |
+          <%= link_to "delete", list_task_path(@list, t),
+                                data: { confirm: 'u sure bro?',
+                                        method: 'delete' } %>
+        </li>
+      <% end %>
     <% end %>
   </ul>
 
