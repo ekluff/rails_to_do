@@ -1,0 +1,31 @@
+<h1><%= @list.name %></h1>
+
+<% if @list.tasks.any? %>
+  <h4>are thing for needing do</h4>
+
+  <ul>
+    <% @list.tasks.each do |t| %>
+      <li>
+        <%= t.description %> |
+        <%= link_to "edit", edit_list_task_path(@list, t) %> |
+        <%= link_to "delete", list_task_path(@list, t),
+                              data: { confirm: 'u sure bro?',
+                                      method: 'delete' } %>
+      </li>
+    <% end %>
+  </ul>
+
+<% else %>
+  <p>
+    there ain't be no tasks.
+  </p>
+<% end %>
+
+
+<p><%= link_to "add things", new_list_task_path(@list) %></p>
+<p><%= link_to "Edit", edit_list_path(@list) %></p>
+<p><%= link_to "Delete", list_path(@list),
+                          :data => {:confirm => "U sure bro?",
+                          :method => "delete"} %></p>
+
+<p><%= link_to "Return to all lists", lists_path %></p>
